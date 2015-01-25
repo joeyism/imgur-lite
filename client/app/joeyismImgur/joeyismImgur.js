@@ -1,6 +1,6 @@
 /* jshint ignore:start */
 
-angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoadingBar','$timeout','$window', function($http, cfpLoadingBar, $timeout,$window){
+angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoadingBar','$timeout','$window','$location', function($http, cfpLoadingBar, $timeout,$window,$location){
   'use strict';
 
   return {
@@ -64,6 +64,7 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
         $timeout(function(){
           cfpLoadingBar.complete();
         },1);
+        goToTop();
       };
 
       scope.prev = function(){
@@ -75,7 +76,7 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
             cfpLoadingBar.complete();
           },1);
         }
-
+        goToTop();
       };
 
       element.bind('load', function() {
@@ -88,6 +89,11 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
           scope.prev();
         }
       });
+
+      var goToTop = function(){
+      $location.hash('top');
+      $anchorScroll();
+      };
 
 
       //      scope.skip= function(){
