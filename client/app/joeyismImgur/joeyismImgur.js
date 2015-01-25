@@ -1,4 +1,6 @@
-angular.module('joeyismImgurApp').directive('joeyismImgurApp',['$http','cfpLoadingBar','$timeout', function($http, cfpLoadingBar, $timeout){
+/* jshint ignore:start */
+
+angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoadingBar','$timeout', function($http, cfpLoadingBar, $timeout){
   'use strict';
 
   return {
