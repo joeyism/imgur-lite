@@ -1,6 +1,6 @@
 /* jshint ignore:start */
 
-angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoadingBar','$timeout', function($http, cfpLoadingBar, $timeout){
+angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoadingBar','$timeout','$window', function($http, cfpLoadingBar, $timeout,$window){
   'use strict';
 
   return {
@@ -9,10 +9,19 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
 
     link: function(scope, element){
       cfpLoadingBar.start();
+
       var imageIndex = 0,
           lengthOfImageArray,
           galleryIndex = 0;
       scope.datas = [];
+
+      scope.$watch(function(){
+        return $window.innerWidth;
+      }, function(value) {
+        scope.padding = value > 1000 ? 200: Math.min(0,value - 800);
+        console.log(value);
+      });
+
       var getImages = function(){
         $http.get('https://api.imgur.com/3/gallery/hot/viral/'+galleryIndex+'.json').success(function(data){
           scope.datas = scope.datas.concat(data.data);
@@ -58,12 +67,15 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
       };
 
       scope.prev = function(){
-        cfpLoadingBar.start();
-        imageIndex--;
-        scope.thisData = scope.datas[imageIndex];
-        $timeout(function(){
-          cfpLoadingBar.complete();
-        },1);
+        if (imageIndex > 0){
+          cfpLoadingBar.start();
+          imageIndex--;
+          scope.thisData = scope.datas[imageIndex];
+          $timeout(function(){
+            cfpLoadingBar.complete();
+          },1);
+        }
+
       };
 
       element.bind('load', function() {
