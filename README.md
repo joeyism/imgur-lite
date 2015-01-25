@@ -20,7 +20,8 @@ To add this app to your own website, run
 
 and copy the dist file over to your website, then add
 
-> <div joeyism-imgur-lite></div>
+    <div joeyism-imgur-lite></div>
+
 
 to run imgur-lite. Also put
 
@@ -28,6 +29,6 @@ to run imgur-lite. Also put
 
 on your <body> tag such that
 
-> <body ng-app="myApp" ng-keydown="$broadcast('my:keydown', $event)">
+    <body ng-app="myApp" ng-keydown="$broadcast('my:keydown', $event)">
 
 to browse with your left and right key. Don't include it if you don't want to use the left and right key to browse back and forth.
