@@ -1,26 +1,45 @@
-<div  style="background: #121211; padding: 20px {{padding}}px 20px {{padding}}px">
+<div style="background: #121211; padding: 20px {{padding}}px 20px {{padding}}px">
     <div id="top></div>
     <div class="row">
         <div class="col-xs-1">
-            <button ng-click="prev()" class="button-float Fixed" style="float: left"><<</button>
+            <button ng-click="prev()" class="button-float Fixed" style="float: left">&lt&lt</button>
         </div>
         <!-- <button ng-click="skip()" class="button-float" style="float: right">Skip</button> -->
 
-        <div class="col-xs-9 jumbotron" style="background: #2b2b2b; border-radius: 15px; padding: 15px; position:relative" >
+        <div class="col-xs-9">
+            <div class="jumbotron" style="background: #2b2b2b; border-radius: 15px; padding: 15px; position:relative" >
             <div>
                 <div>
-                    <a href="http://imgur.com/gallery/{{thisData.id}}" style="font-size: medium; font-color:"><b>{{thisData.title}}</b></a>
+                    <a ng-href="http://imgur.com/gallery/{{thisData.id}}" style="font-size: medium; font-color:"><b>{{thisData.title}}</b></a>
                 </div>
-                <span style="color: #ddddd1">by</span> <a href="http://imgur.com/user/{{thisData.account_url}}" ng-if="thisData.account_url">{{thisData.account_url}}</a>
+                <span style="color: #ddddd1">by</span> <a ng-href="http://imgur.com/user/{{thisData.account_url}}" ng-if="thisData.account_url">{{thisData.account_url}}</a>
                 <span ng-if="!thisData.account_url" style="color: #ddddd1">Anon</span>
             </div>
             <div ng-repeat="imageLink in thisData.link track by $index">
-                <a href="{{imageLink}}"> <img ng-src="{{imageLink}}" style="width:100%; height: 100%"></a>
+                <div class="subtitle">{{thisData.subtitle[$index]}}</div>
+                <img ng-src="{{imageLink}}" class="imageLink" imageonload>
+                <div class="description">{{thisData.description[$index]}}</div>
+            </div>
+            </div>
+
+            <div ng-repeat="comment in thisData.comments track by $index" ng-init="parentId = comment.id">
+                                                    <!-- <span ng-click="expandParent($index)" ng-class={{}}>
+                                                     +
+                                                     </span> -->
+                <div class="color-bone">
+                    <div><a ng-href="http://imgur.com/user/{{comment.author}}" style="padding-right: 20px;">{{comment.author}}</a>{{comment.points}} points</div>
+                    <div>{{comment.comment}}</div>
+                    <div  ng-repeat="child in comment.children" style="padding-left: 25px" ng-if="child.parent_id === parentId">
+                        <div>
+                        <div><a ng-href="http://imgur.com/user/{{child.author}}" style="padding-right: 20px;">{{child.author}}</a>{{child.points}} points</div>
+                        <div>{{child.comment}}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
         <div class="col-xs-1">
-            <button ng-click="next()" class="button-float Fixed" style="float: right">>></button>
+            <button ng-click="next()" class="button-float Fixed" style="float: right">&gt&gt</button>
         </div>
     </div>
 </div>

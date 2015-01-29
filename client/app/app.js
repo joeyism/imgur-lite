@@ -8,21 +8,32 @@ angular.module('joeyismImgurApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
-  'angular-loading-bar'
+  'angular-loading-bar',
+  'ngTouch'
 ])
-.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
-  $urlRouterProvider
-  .otherwise('/');
+.config(function ($stateProvider, $urlRouterProvider, $locationProvider,$httpProvider,cfpLoadingBarProvider) {
+  $urlRouterProvider.otherwise('/');
+    cfpLoadingBarProvider.includeSpinner = false;
 
   $locationProvider.html5Mode(true);
-  $httpProvider.interceptors.push('authInterceptor');
 
-})
-.factory('authInterceptor', function ($rootScope, $q, $window) {
+  $stateProvider.state('main', {
+    url: '/',
+    templateUrl: 'app/main/main.html',
+    controller: 'MainCtrl'
+  });
+
+  $stateProvider.state('imgur-lite',{
+    url: '/imgurlite',
+    template: '<div joeyism-imgur-lite></div>'
+  });
+
+    $httpProvider.interceptors.push('authInterceptor');
+}).factory('authInterceptor', function ($rootScope, $q, $window) {
   return {
     request: function (config) {
       config.headers = config.headers || {};
-      config.headers.Authorization = "Client-ID 33a2cffe7a9c413";
+      config.headers.Authorization = "Client-ID 31b48b2469457ee";
       //console.log(config);
       //console.log($window);
       if ($window.sessionStorage.token) {

@@ -1,6 +1,7 @@
 /* jshint ignore:start */
 
-angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoadingBar','$timeout','$window','$location', function($http, cfpLoadingBar, $timeout,$window,$location){
+angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoadingBar','$timeout','$window','$location', '$anchorScroll',
+                                                                  function($http, cfpLoadingBar, $timeout,$window,$location,$anchorScroll){
   'use strict';
 
   return {
@@ -19,7 +20,6 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
         return $window.innerWidth;
       }, function(value) {
         scope.padding = value > 1000 ? 200: Math.min(0,value - 800);
-        console.log(value);
       });
 
       var getImages = function(){
@@ -27,19 +27,31 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
           scope.datas = scope.datas.concat(data.data);
           lengthOfImageArray = scope.datas.length;
           scope.datas.forEach(function(data){
+            data.subtitle=[data.subtitle];
+            data.description = [data.description];
             if (data.images_count){
+              data.link=[];
+              data.subtitle=[];
+              data.description=[];
               $http.get('https://api.imgur.com/3/album/'+data.id).success(function(album){
-                data.link=[];
                 album.data.images.forEach(function(image){
                   data.link.push(image.link);
+                  data.subtitle.push(image.title || "");
+                  data.description.push(image.description || "");
                 });
               })
               .error(function(err){
                 console.log(err);
               });
+              $http.get('https://api.imgur.com/3/gallery/album/'+data.id+'/comments/best').success(function(comments){
+                data.comments= comments.data;
+              });
             }
             else {
-              data.link = [data.link];
+              data.link = [data.link]
+              $http.get('https://api.imgur.com/3/gallery/image/'+data.id+'/comments/best').success(function(comments){
+                data.comments= comments.data;
+              });
             }
           });
           scope.thisData = scope.datas[imageIndex];
@@ -48,8 +60,8 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
           console.log(err);
         });
       };
-
       getImages();
+
       scope.next = function(){
         cfpLoadingBar.start();
         imageIndex++;
@@ -61,27 +73,24 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
         } else {
           scope.thisData = scope.datas[imageIndex];
         }
-        $timeout(function(){
-          cfpLoadingBar.complete();
-        },1);
         goToTop();
       };
 
+
       scope.prev = function(){
-        if (imageIndex > 0){
-          cfpLoadingBar.start();
-          imageIndex--;
-          scope.thisData = scope.datas[imageIndex];
-          $timeout(function(){
-            cfpLoadingBar.complete();
-          },1);
+        if (galleryIndex >= 0){
+          if (imageIndex >= 0){
+            cfpLoadingBar.start();
+            imageIndex--;
+            scope.thisData = scope.datas[imageIndex];
+            $timeout(function(){
+              cfpLoadingBar.complete();
+            },1);
+          }
         }
         goToTop();
       };
 
-      element.bind('load', function() {
-        cfpLoadingBar.complete();
-      });
       scope.$on('my:keydown', function(event, keyEvent) {
         if (keyEvent.keyCode===39){
           scope.next();
@@ -91,8 +100,8 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
       });
 
       var goToTop = function(){
-      $location.hash('top');
-      $anchorScroll();
+        $location.hash('top');
+        $anchorScroll();
       };
 
 
@@ -101,4 +110,15 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
       //      };
     }
   };
+}]);
+angular.module('joeyismImgurApp').directive('imageonload',['cfpLoadingBar', function(cfpLoadingBar) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind('load', function() {
+                //alert('image is loaded');
+              cfpLoadingBar.complete();
+            });
+        }
+    };
 }]);

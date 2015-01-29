@@ -23,7 +23,8 @@
     <!-- endbuild -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   </head>
-  <body ng-app="joeyismImgurApp" ng-keydown="$broadcast('my:keydown', $event)" style="background: black">
+  <body ng-app="joeyismImgurApp" ng-keydown="$broadcast('my:keydown', $event)" style="background: black"  ng-swipe-left="$broadcast('my:keydown',{keyCode:37})"
+        ng-swipe-right="$broadcast('my:keydown',{keyCode:39})">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -56,6 +57,7 @@
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+      <script src="bower_components/angular-touch/angular-touch.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 

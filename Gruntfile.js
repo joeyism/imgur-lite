@@ -312,355 +312,358 @@ module.exports = function (grunt) {
         // This should be the name of your apps angular module
         module: 'joeyismImgurApp',
         htmlmin: {
-          collapseBooleanAttributes: true,
-          collapseWhitespace: true,
-          removeAttributeQuotes: true,
-          removeEmptyAttributes: true,
-          removeRedundantAttributes: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true
-        },
-        usemin: 'app/app.js'
+        collapseBooleanAttributes: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+        removeEmptyAttributes: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true
       },
-      main: {
-        cwd: '<%= yeoman.client %>',
-        src: ['{app,components}/**/*.html'],
-        dest: '.tmp/templates.js'
-      },
-      tmp: {
-        cwd: '.tmp',
-        src: ['{app,components}/**/*.html'],
-        dest: '.tmp/tmp-templates.js'
-      }
+      usemin: 'app/app.js'
     },
-
-    // Replace Google CDN references
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/public/*.html']
-      }
+    main: {
+      cwd: '<%= yeoman.client %>',
+      src: ['{app,components}/**/*.html'],
+      dest: '.tmp/templates.js'
     },
+    tmp: {
+      cwd: '.tmp',
+      src: ['{app,components}/**/*.html'],
+      dest: '.tmp/tmp-templates.js'
+    }
+  },
 
-    // Copies remaining files to places other tasks can use
-    copy: {
-      dist: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.client %>',
-          dest: '<%= yeoman.dist %>/public',
-          src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            'bower_components/**/*',
-            'assets/images/{,*/}*.{webp}',
-            'assets/fonts/**/*',
-            'index.html'
-          ]
-        }, {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/public/assets/images',
-          src: ['generated/*']
-        }, {
-          expand: true,
-          dest: '<%= yeoman.dist %>',
-          src: [
-            'package.json',
-            'server/**/*'
-          ]
-        }]
-      },
-      styles: {
-        expand: true,
-        cwd: '<%= yeoman.client %>',
-        dest: '.tmp/',
-        src: ['{app,components}/**/*.css']
-      }
-    },
+                   // Replace Google CDN references
+                   cdnify: {
+                   dist: {
+                   html: ['<%= yeoman.dist %>/public/*.html']
+                   }
+                   },
 
-    buildcontrol: {
-      options: {
-        dir: 'dist',
-        commit: true,
-        push: true,
-        connectCommits: false,
-        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
-      },
-      heroku: {
-        options: {
-          remote: 'heroku',
-          branch: 'master'
-        }
-      },
-      openshift: {
-        options: {
-          remote: 'openshift',
-          branch: 'master'
-        }
-      }
-    },
+                   // Copies remaining files to places other tasks can use
+                   copy: {
+                   dist: {
+                   files: [{
+                   expand: true,
+                   dot: true,
+                   cwd: '<%= yeoman.client %>',
+                   dest: '<%= yeoman.dist %>/public',
+                   src: [
+                   '*.{ico,png,txt}',
+                   '.htaccess',
+                   'bower_components/**/*',
+                   'assets/images/{,*/}*.{webp}',
+                   'assets/fonts/**/*',
+                   'index.html'
+                   ]
+                   }, {
+                   expand: true,
+                   cwd: '.tmp/images',
+                   dest: '<%= yeoman.dist %>/public/assets/images',
+                   src: ['generated/*']
+                   }, {
+                   expand: true,
+                   dest: '<%= yeoman.dist %>',
+                   src: [
+                   'package.json',
+                   'server/**/*'
+                   ]
+                   }]
+                   },
+                   styles: {
+                   expand: true,
+                   cwd: '<%= yeoman.client %>',
+                   dest: '.tmp/',
+                   src: ['{app,components}/**/*.css']
+                   }
+                   },
 
-    // Run some tasks in parallel to speed up the build process
-    concurrent: {
-      server: [
-        'less',
-      ],
-      test: [
-        'less',
-      ],
-      debug: {
-        tasks: [
-          'nodemon',
-          'node-inspector'
-        ],
-        options: {
-          logConcurrentOutput: true
-        }
-      },
-      dist: [
-        'less',
-        'imagemin',
-        'svgmin'
-      ]
-    },
+                   buildcontrol: {
+                   options: {
+                   dir: 'dist',
+                   commit: true,
+                   push: true,
+                   connectCommits: false,
+                   message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+                   },
+                   heroku: {
+                   options: {
+                   remote: 'heroku',
+                   branch: 'master'
+                   }
+                   },
+                   openshift: {
+                   options: {
+                   remote: 'openshift',
+                   branch: 'master'
+                   }
+                   }
+                   },
 
-    // Test settings
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
+                   // Run some tasks in parallel to speed up the build process
+                   concurrent: {
+                   server: [
+                   'less',
+                   ],
+                   test: [
+                   'less',
+                   ],
+                   debug: {
+                   tasks: [
+                   'nodemon',
+                   'node-inspector'
+                   ],
+                   options: {
+                   logConcurrentOutput: true
+                   }
+                   },
+                   dist: [
+                   'less',
+                   'imagemin',
+                   'svgmin'
+                   ]
+                   },
 
-    mochaTest: {
-      options: {
-        reporter: 'spec'
-      },
-      src: ['server/**/*.spec.js']
-    },
+                   // Test settings
+                   karma: {
+                   unit: {
+                   configFile: 'karma.conf.js',
+                   singleRun: true
+                   }
+                   },
 
-    protractor: {
-      options: {
-        configFile: 'protractor.conf.js'
-      },
-      chrome: {
-        options: {
-          args: {
-            browser: 'chrome'
-          }
-        }
-      }
-    },
+                   mochaTest: {
+                   options: {
+                   reporter: 'spec'
+                   },
+                   src: ['server/**/*.spec.js']
+                   },
 
-    env: {
-      test: {
-        NODE_ENV: 'test'
-      },
-      prod: {
-        NODE_ENV: 'production'
-      },
-      all: localConfig
-    },
+                   protractor: {
+                   options: {
+                   configFile: 'protractor.conf.js'
+                   },
+                   chrome: {
+                   options: {
+                   args: {
+                   browser: 'chrome'
+                   }
+                   }
+                   }
+                   },
 
-    // Compiles Less to CSS
-    less: {
-      options: {
-        paths: [
-          '<%= yeoman.client %>/bower_components',
-          '<%= yeoman.client %>/app',
-          '<%= yeoman.client %>/components'
-        ]
-      },
-      server: {
-        files: {
-          '.tmp/app/app.css' : '<%= yeoman.client %>/app/app.less'
-        }
-      },
-    },
+                   env: {
+                   test: {
+                   NODE_ENV: 'test'
+                   },
+                   prod: {
+                   NODE_ENV: 'production'
+                   },
+                   all: localConfig
+                   },
 
-    injector: {
-      options: {
+                   // Compiles Less to CSS
+                   less: {
+                   options: {
+                   paths: [
+                   '<%= yeoman.client %>/bower_components',
+                   '<%= yeoman.client %>/app',
+                   '<%= yeoman.client %>/components'
+                   ]
+                   },
+                   server: {
+                   files: {
+                   '.tmp/app/app.css' : '<%= yeoman.client %>/app/app.less'
+                   }
+                   },
+                   },
 
-      },
-      // Inject application script files into index.html (doesn't include bower)
-      scripts: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
-            filePath = filePath.replace('/.tmp/', '');
-            return '<script src="' + filePath + '"></script>';
-          },
-          starttag: '<!-- injector:js -->',
-          endtag: '<!-- endinjector -->'
-        },
-        files: {
-          '<%= yeoman.client %>/index.html': [
-              ['{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-               '!{.tmp,<%= yeoman.client %>}/app/app.js',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
-            ]
-        }
-      },
+                   injector: {
+                   options: {
 
-      // Inject component less into app.less
-      less: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/app/', '');
-            filePath = filePath.replace('/client/components/', '');
-            return '@import \'' + filePath + '\';';
-          },
-          starttag: '// injector',
+                   },
+                   // Inject application script files into index.html (doesn't include bower)
+                   scripts: {
+                   options: {
+                   transform: function(filePath) {
+    filePath = filePath.replace('/client/', '');
+    filePath = filePath.replace('/.tmp/', '');
+    return '<script src="' + filePath + '"></script>';
+  },
+    starttag: '<!-- injector:js -->',
+      endtag: '<!-- endinjector -->'
+},
+  files: {
+    '<%= yeoman.client %>/index.html': [
+      ['{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
+       '!{.tmp,<%= yeoman.client %>}/app/app.js',
+       '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
+       '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
+    ]
+  }
+},
+
+  // Inject component less into app.less
+  less: {
+    options: {
+      transform: function(filePath) {
+        filePath = filePath.replace('/client/app/', '');
+        filePath = filePath.replace('/client/components/', '');
+        return '@import \'' + filePath + '\';';
+      },
+        starttag: '// injector',
           endtag: '// endinjector'
-        },
-        files: {
-          '<%= yeoman.client %>/app/app.less': [
-            '<%= yeoman.client %>/{app,components}/**/*.less',
-            '!<%= yeoman.client %>/app/app.less'
-          ]
-        }
-      },
+    },
+      files: {
+        '<%= yeoman.client %>/app/app.less': [
+          '<%= yeoman.client %>/{app,components}/**/*.less',
+          '!<%= yeoman.client %>/app/app.less'
+        ]
+      }
+  },
 
-      // Inject component css into index.html
-      css: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
-            filePath = filePath.replace('/.tmp/', '');
-            return '<link rel="stylesheet" href="' + filePath + '">';
-          },
-          starttag: '<!-- injector:css -->',
-          endtag: '<!-- endinjector -->'
+    // Inject component css into index.html
+    css: {
+      options: {
+        transform: function(filePath) {
+          filePath = filePath.replace('/client/', '');
+          filePath = filePath.replace('/.tmp/', '');
+          return '<link rel="stylesheet" href="' + filePath + '">';
         },
+          starttag: '<!-- injector:css -->',
+            endtag: '<!-- endinjector -->'
+      },
         files: {
           '<%= yeoman.client %>/index.html': [
             '<%= yeoman.client %>/{app,components}/**/*.css'
           ]
         }
-      }
-    },
-  });
-
-  // Used for delaying livereload until after server has restarted
-  grunt.registerTask('wait', function () {
-    grunt.log.ok('Waiting for server reload...');
-
-    var done = this.async();
-
-    setTimeout(function () {
-      grunt.log.writeln('Done waiting!');
-      done();
-    }, 1500);
-  });
-
-  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
-    this.async();
-  });
-
-  grunt.registerTask('serve', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
     }
+},
+});
 
-    if (target === 'debug') {
-      return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'injector:less', 
-        'concurrent:server',
-        'injector',
-        'wiredep',
-        'autoprefixer',
-        'concurrent:debug'
-      ]);
-    }
+// Used for delaying livereload until after server has restarted
+grunt.registerTask('wait', function () {
+  grunt.log.ok('Waiting for server reload...');
 
-    grunt.task.run([
+  var done = this.async();
+
+  setTimeout(function () {
+    grunt.log.writeln('Done waiting!');
+    done();
+  }, 1500);
+});
+
+grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
+  this.async();
+});
+
+grunt.registerTask('serve', function (target) {
+  if (target === 'dist') {
+    return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
+  }
+
+  if (target === 'debug') {
+    return grunt.task.run([
       'clean:server',
       'env:all',
-      'injector:less', 
+      'injector:less',
       'concurrent:server',
       'injector',
       'wiredep',
       'autoprefixer',
-      'express:dev',
-      'wait',
-      'open',
-      'watch'
+      'concurrent:debug'
     ]);
-  });
+  }
 
-  grunt.registerTask('server', function () {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve']);
-  });
-
-  grunt.registerTask('test', function(target) {
-    if (target === 'server') {
-      return grunt.task.run([
-        'env:all',
-        'env:test',
-        'mochaTest'
-      ]);
-    }
-
-    else if (target === 'client') {
-      return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'injector:less', 
-        'concurrent:test',
-        'injector',
-        'autoprefixer',
-        'karma'
-      ]);
-    }
-
-    else if (target === 'e2e') {
-      return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'env:test',
-        'injector:less', 
-        'concurrent:test',
-        'injector',
-        'wiredep',
-        'autoprefixer',
-        'express:dev',
-        'protractor'
-      ]);
-    }
-
-    else grunt.task.run([
-      'test:server',
-      'test:client'
-    ]);
-  });
-
-  grunt.registerTask('build', [
-    'clean:dist',
-    'injector:less', 
-    'concurrent:dist',
+  grunt.task.run([
+    'clean:server',
+    'env:all',
+    'injector:less',
+    'concurrent:server',
     'injector',
     'wiredep',
-    'useminPrepare',
     'autoprefixer',
-    'ngtemplates',
-    'concat',
-    'ngAnnotate',
-    'copy:dist',
-    'cdnify',
-    'cssmin',
-    'uglify',
-    'rev',
-    'usemin'
+    'express:dev',
+    'wait',
+    'open',
+    'watch'
   ]);
+});
 
-  grunt.registerTask('default', [
-    'newer:jshint',
-    'test',
-    'build'
+grunt.registerTask('server', function () {
+  grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
+  grunt.task.run(['serve']);
+});
+
+grunt.registerTask('test', function(target) {
+  if (target === 'server') {
+    return grunt.task.run([
+      'env:all',
+      'env:test',
+      'mochaTest'
+    ]);
+  }
+
+  else if (target === 'client') {
+    return grunt.task.run([
+      'clean:server',
+      'env:all',
+      'injector:less',
+      'concurrent:test',
+      'injector',
+      'autoprefixer',
+      'karma'
+    ]);
+  }
+
+  else if (target === 'e2e') {
+    return grunt.task.run([
+      'clean:server',
+      'env:all',
+      'env:test',
+      'injector:less',
+      'concurrent:test',
+      'injector',
+      'wiredep',
+      'autoprefixer',
+      'express:dev',
+      'protractor'
+    ]);
+  }
+
+  else grunt.task.run([
+    'test:server',
+    'test:client'
   ]);
+});
+
+grunt.registerTask('build', [
+  'clean:dist',
+  'injector:less',
+  'concurrent:dist',
+  'injector',
+  'wiredep',
+  'useminPrepare',
+  'autoprefixer',
+  'ngtemplates',
+  'concat',
+  'ngAnnotate',
+  'copy:dist',
+  'cdnify',
+  'cssmin',
+  'uglify',
+  'rev',
+  'usemin'
+]);
+
+grunt.registerTask('default', [
+  'newer:jshint',
+  'test',
+  'build'
+]);
+
+grunt.registerTask('dist', ['concat:dist', 'uglify:dist']);
+
 };
