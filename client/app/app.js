@@ -2,7 +2,7 @@
 
 'use strict';
 
-angular.module('joeyismImgurApp', [
+var imgurApp = angular.module('joeyismImgurApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',

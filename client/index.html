@@ -64,9 +64,11 @@
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
           <!-- injector:js -->
-          <script src="app/joeyismImgur/joeyismImgur.js"></script>
-          <script src="app/main/main.controller.js"></script>
+          <script src="app/controllers/mainController.js"></script>
+          <script src="app/directives/imageOnLoadDirective.js"></script>
+          <script src="app/directives/joeyismImgurLiteDirective.js"></script>
           <script src="app/main/main.js"></script>
+          <script src="app/services/imgurService.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->

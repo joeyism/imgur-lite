@@ -1,11 +1,11 @@
 /* jshint ignore:start */
 
-angular.module('joeyismImgurApp').directive('joeyismImgurLite', ['imgurService','cfpLoadingBar','$timeout','$window','$location', '$anchorScroll',
+imgurApp.directive('joeyismImgurLite', ['imgurService','cfpLoadingBar','$timeout','$window','$location', '$anchorScroll',
                                                                   function(imgurService, cfpLoadingBar, $timeout,$window,$location,$anchorScroll){
   'use strict';
 
   return {
-    templateUrl: 'app/joeyismImgur/joeyismImgur.html',
+    templateUrl: 'app/templates/joeyismImgur.html',
     replace: true,
 
     link: function(scope, element){
@@ -98,62 +98,6 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite', ['imgurService',
         $location.hash('top');
         $anchorScroll();
       };
-
-
-      //      scope.skip= function(){
-      //        imageIndex = lengthOfImageArray-3;
-      //      };
     }
   };
 }]);
-angular.module('joeyismImgurApp').directive('imageonload',['cfpLoadingBar', function(cfpLoadingBar) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            element.bind('load', function() {
-                //alert('image is loaded');
-              cfpLoadingBar.complete();
-            });
-        }
-    };
-}]);
-
-angular.module('joeyismImgurApp').service('imgurService', ['$http',  function($http) {
-  var IMGUR_GALLERY = 'https://api.imgur.com/3/gallery/hot/viral/',
-    ALBUM = 'https://api.imgur.com/3/album/',
-    COMMENTS = '/comments/best';
-
-  function galleryRequest(index) {
-    return $http({
-      method: 'GET',
-      url: IMGUR_GALLERY + index + '.json'
-    });
-  }
-
-  function albumRequest(id) {
-    console.log(ALBUM + id);
-    return $http({
-      method: 'GET',
-      URL: ALBUM + id
-    });
-  }
-
-  function commentsRequest(type, id) {
-    return $http({
-      method: 'GET',
-      URL: 'https://api.imgur.com/3/' + type + id + COMMENTS
-    });
-  }
-
-  this.getGallery = function(index) {
-    return galleryRequest(index);
-  };
-
-  this.getAlbum = function(id) {
-    return albumRequest(id);
-  }
-
-  this.getComments = function(type, id) {
-    return commentsRequest(type, id);
-  };
-}])
