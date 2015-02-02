@@ -1,7 +1,7 @@
 /* jshint ignore:start */
 
-angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoadingBar','$timeout','$window','$location', '$anchorScroll',
-                                                                  function($http, cfpLoadingBar, $timeout,$window,$location,$anchorScroll){
+angular.module('joeyismImgurApp').directive('joeyismImgurLite', ['imgurService','cfpLoadingBar','$timeout','$window','$location', '$anchorScroll',
+                                                                  function(imgurService, cfpLoadingBar, $timeout,$window,$location,$anchorScroll){
   'use strict';
 
   return {
@@ -22,44 +22,39 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
         scope.padding = value > 1000 ? 200: Math.min(0,value - 800);
       });
 
-      var getImages = function(){
-        $http.get('https://api.imgur.com/3/gallery/hot/viral/'+galleryIndex+'.json').success(function(data){
-          scope.datas = scope.datas.concat(data.data);
+      var getImages = function() {
+        imgurService.getGallery(galleryIndex).then(function(data) {
+          scope.datas = scope.datas.concat(data.data.data);
           lengthOfImageArray = scope.datas.length;
-          scope.datas.forEach(function(data){
-            data.subtitle=[data.subtitle];
+          scope.datas.forEach(function(data) {
+            data.subtitle = [data.subtitle];
             data.description = [data.description];
-            if (data.images_count){
-              data.link=[];
-              data.subtitle=[];
-              data.description=[];
-              $http.get('https://api.imgur.com/3/album/'+data.id).success(function(album){
-                album.data.images.forEach(function(image){
+            if (data.images_count) {
+              data.link = [];
+              data.subtitle = [];
+              data.description = [];
+              imgurService.getAlbum(data.id).then(function(album) {
+                consoel.log(album, 'album');
+                album.data.images.forEach(function(image) {
                   data.link.push(image.link);
-                  data.subtitle.push(image.title || "");
-                  data.description.push(image.description || "");
+                    data.subtitle.push(image.title || "");
+                    data.description.push(image.description || "");
                 });
-              })
-              .error(function(err){
-                console.log(err);
               });
-              $http.get('https://api.imgur.com/3/gallery/album/'+data.id+'/comments/best').success(function(comments){
+              imgurService.getComments('album/', data.id).then(function(comments) {
                 data.comments= comments.data;
               });
-            }
-            else {
-              data.link = [data.link]
-              $http.get('https://api.imgur.com/3/gallery/image/'+data.id+'/comments/best').success(function(comments){
-                data.comments= comments.data;
+            } else {
+              data.link = [data.link];
+              imgurService.getComments('image/', data.id).then(function(comments) {
+                data.comments = comments.data;
               });
             }
           });
           scope.thisData = scope.datas[imageIndex];
-        })
-        .error(function(err){
-          console.log(err);
         });
       };
+
       getImages();
 
       scope.next = function(){
@@ -122,3 +117,43 @@ angular.module('joeyismImgurApp').directive('imageonload',['cfpLoadingBar', func
         }
     };
 }]);
+
+angular.module('joeyismImgurApp').service('imgurService', ['$http',  function($http) {
+  var IMGUR_GALLERY = 'https://api.imgur.com/3/gallery/hot/viral/',
+    ALBUM = 'https://api.imgur.com/3/album/',
+    COMMENTS = '/comments/best';
+
+  function galleryRequest(index) {
+    return $http({
+      method: 'GET',
+      url: IMGUR_GALLERY + index + '.json'
+    });
+  }
+
+  function albumRequest(id) {
+    console.log(ALBUM + id);
+    return $http({
+      method: 'GET',
+      URL: ALBUM + id
+    });
+  }
+
+  function commentsRequest(type, id) {
+    return $http({
+      method: 'GET',
+      URL: 'https://api.imgur.com/3/' + type + id + COMMENTS
+    });
+  }
+
+  this.getGallery = function(index) {
+    return galleryRequest(index);
+  };
+
+  this.getAlbum = function(id) {
+    return albumRequest(id);
+  }
+
+  this.getComments = function(type, id) {
+    return commentsRequest(type, id);
+  };
+}])
