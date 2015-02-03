@@ -14,6 +14,8 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
       var imageIndex = 0,
           lengthOfImageArray,
           galleryIndex = 0;
+      scope.left = false;
+      scope.right = false;
       scope.datas = [];
 
       scope.$watch(function(){
@@ -63,6 +65,7 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
       getImages();
 
       scope.next = function(){
+        scope.right = true;
         cfpLoadingBar.start();
         imageIndex++;
         if (imageIndex === lengthOfImageArray){
@@ -74,10 +77,12 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
           scope.thisData = scope.datas[imageIndex];
         }
         goToTop();
+
       };
 
 
       scope.prev = function(){
+        scope.left = true;
         if (galleryIndex >= 0){
           if (imageIndex >= 0){
             cfpLoadingBar.start();
