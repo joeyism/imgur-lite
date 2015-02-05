@@ -77,6 +77,11 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
           scope.thisData = scope.datas[imageIndex];
         }
         goToTop();
+        var preloadImages = scope.datas[imageIndex+1];
+        console.log(preloadImages);
+        preloadImages.link.forEach(function(link){
+          preload(link);
+        });
 
       };
 
@@ -109,7 +114,12 @@ angular.module('joeyismImgurApp').directive('joeyismImgurLite',['$http','cfpLoad
         $anchorScroll();
       };
 
-
+      var preload = function (url){
+        scope.$evalAsync(function(){
+          var img=new Image();
+          img.src=url;
+        });
+      };
       //      scope.skip= function(){
       //        imageIndex = lengthOfImageArray-3;
       //      };

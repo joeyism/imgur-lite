@@ -12,9 +12,7 @@
         </div>
         <div ng-repeat="imageLink in thisData.link track by $index">
             <div class="subtitle">{{thisData.subtitle[$index]}}</div>
-            {{left}}
-            {{right}}
-            <img ng-src="{{imageLink}}" class="imageLink" ng-class="{swipe-left: left, swipe-right: right}" imageonload>
+            <img ng-src="{{imageLink}}" class="imageLink" imageonload>
             <div class="description">{{thisData.description[$index]}}</div>
         </div>
     </div>
