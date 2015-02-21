@@ -21,7 +21,7 @@
       <!-- injector:css -->
       <!-- endinjector -->
     <!-- endbuild -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   </head>
   <body ng-app="joeyismImgurApp" ng-keydown="$broadcast('my:keydown', $event)" style="background: black"  ng-swipe-left="$broadcast('my:keydown',{keyCode:37})"
         ng-swipe-right="$broadcast('my:keydown',{keyCode:39})">
@@ -58,15 +58,19 @@
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
       <script src="bower_components/angular-touch/angular-touch.js"></script>
+      <script src="bower_components/gifffer/build/gifffer.min.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
           <!-- injector:js -->
-          <script src="app/joeyismImgur/joeyismImgur.js"></script>
-          <script src="app/main/main.controller.js"></script>
+          <script src="app/controllers/mainController.js"></script>
+          <script src="app/directives/autoLinker.js"></script>
+          <script src="app/directives/imageOnLoadDirective.js"></script>
+          <script src="app/directives/joeyismImgurLiteDirective.js"></script>
           <script src="app/main/main.js"></script>
+          <script src="app/services/imgurService.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->
