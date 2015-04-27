@@ -12,7 +12,7 @@
         </div>
      <div ng-repeat="imageLink in thisData.link track by $index">
         <div class="subtitle" auto-linker>{{thisData.subtitle[$index]}}</div>
-        <img class="imageLink" ng-src="{{imageLink}}?gifm" imageonload>
+        <img class="imageLink" ng-class="{swiperight: swipeRight}" ng-src="{{imageLink}}?gifm" imageonload>
         <div ng-if="thisData.description[$index]!== null" class="description" auto-linker>{{thisData.description[$index]}}</div>
     </div>
     <div style="margin-top:1%" >
@@ -32,6 +32,6 @@
         </div>
     </div>
 </div>
-<a style="padding: 0% 5% 2% 5%; word-wrap: break-word" ng-href="http://imgur.com/gallery/{{thisData.id}}" target="_blank" >View more comments </a>
+<a style="padding: 0% 5% 2% 5%; word-wrap: break-word" ng-href="http://imgur.com/gallery/{{thisData.id}}#captions" target="_blank" >View more comments </a>
 <button ng-click="next()" class="button-float Fixed" style="right: 0px">&gt&gt</button>
 </div>

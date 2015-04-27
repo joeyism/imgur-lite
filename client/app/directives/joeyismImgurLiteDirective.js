@@ -87,7 +87,9 @@ imgurApp.directive('joeyismImgurLite', ['imgurService','cfpLoadingBar','$timeout
 
       scope.$on('my:keydown', function(event, keyEvent) {
         if (keyEvent.keyCode===39){
+          scope.swipeRight = true;
           scope.next();
+          $timeout(function(){scope.swipeRight=false;},100)
         } else if (keyEvent.keyCode===37){
           scope.prev();
         }
