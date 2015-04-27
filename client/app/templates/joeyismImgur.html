@@ -2,7 +2,7 @@
     <div id="top"></div>
     <button ng-click="prev()" class="button-float Fixed" style="left: 0px">&lt&lt</button>
 
-    <div class="jumbotron" style="background: #2b2b2b; border-radius: 15px; padding: 4%; position:relative; margin: 0% 5% 0% 5%;" >
+    <div class="jumbotron" style="background: #2b2b2b; border-radius: 15px; padding: 4%; position:relative;" ng-class="{'jumbotron-mobile':mobile, 'jumbotron-browser': !mobile}" >
         <div>
             <div>
                 <a ng-href="http://imgur.com/gallery/{{thisData.id}}" style="font-size: medium; font-color:" target="_blank" ><b>{{thisData.title}}</b></a>
