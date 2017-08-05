@@ -675,6 +675,6 @@ grunt.registerTask('default', [
   'build'
   ]);
 
-grunt.registerTask('dist', ['concat:dist', 'uglify:dist']);
+grunt.registerTask('dist', ['concat:dist']);
 
 };
