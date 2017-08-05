@@ -28,7 +28,6 @@ imgurApp.directive('joeyismImgurLite', ['imgurService','cfpLoadingBar','$timeout
           return check;
 }
       scope.mobile = window.mobilecheck();
-      console.info(scope.mobile);
       var getImages = function() {
         imgurService.getGallery(galleryIndex).then(function(data) {
           scope.datas = scope.datas.concat(data.data.data);
